@@ -1,5 +1,5 @@
 {
-  "name": "passioneight/pimcore-options-providers",
+  "name": "tecbird/pimcore-options-providers",
   "type": "pimcore-bundle",
   "license": "GPL-3.0",
   "autoload": {
