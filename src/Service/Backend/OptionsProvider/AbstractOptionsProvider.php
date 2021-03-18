@@ -57,7 +57,7 @@ abstract class AbstractOptionsProvider implements SelectOptionsProviderInterface
     {
         if (!isset($this->configuration)) {
             $optionsProviderData = $fieldDefinition ? $fieldDefinition->getOptionsProviderData() : $context;
-            $optionsProviderData = is_string($optionsProviderData) ? json_decode($optionsProviderData, true) : $optionsProviderData;
+            $optionsProviderData = is_string($optionsProviderData) && $optionsProviderData !== '' ? json_decode($optionsProviderData, true) : $optionsProviderData;
             $this->configuration = $optionsProviderData ?: [];
 
             if(json_last_error() !== JSON_ERROR_NONE) {
