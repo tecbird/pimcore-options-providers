@@ -6,7 +6,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
-use Passioneight\Bundle\PimcoreOptionsProvidersBundle\Constant\Configuration as Config;
+use Passioneight\Bundle\PimcoreOptionsProvidersBundle\DependencyInjection\Configuration as Config;
 
 class PimcoreOptionsProvidersExtension extends ConfigurableExtension
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Passioneight\Bundle\PimcoreOptionsProvidersBundle\Constant;
+namespace Passioneight\Bundle\PimcoreOptionsProvidersBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
