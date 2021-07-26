@@ -12,7 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ConstantOptionsProvider extends AbstractOptionsProvider
 {
-    const DEFAULT_CONSTANTS_NAMESPACE = "AppBundle" . Php::NAMESPACE_DELIMITER . "Constant";
+    const DEFAULT_CONSTANTS_NAMESPACE = "App" . Php::NAMESPACE_DELIMITER . "Constant";
 
     /** @var TranslatorInterface $translator */
     private $translator;
