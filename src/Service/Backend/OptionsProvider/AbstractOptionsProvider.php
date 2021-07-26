@@ -19,7 +19,7 @@ abstract class AbstractOptionsProvider implements SelectOptionsProviderInterface
     {
         $configuration = $this->loadConfiguration($context, $fieldDefinition);
 
-        $hasStaticOptions = $configuration[OptionsProviderData::STATIC_OPTIONS];
+        $hasStaticOptions = $configuration[OptionsProviderData::STATIC_OPTIONS] ?? false;
         $hasStaticOptions = is_bool($hasStaticOptions) ? $hasStaticOptions : true;
 
         return $hasStaticOptions;
@@ -32,7 +32,7 @@ abstract class AbstractOptionsProvider implements SelectOptionsProviderInterface
     {
         $configuration = $this->loadConfiguration($context, $fieldDefinition);
 
-        if ($default = $configuration[OptionsProviderData::DEFAULT_VALUE]) {
+        if ($default = $configuration[OptionsProviderData::DEFAULT_VALUE] ?? false) {
             return $default;
         }
 
@@ -45,7 +45,7 @@ abstract class AbstractOptionsProvider implements SelectOptionsProviderInterface
      */
     protected function getFieldName($context)
     {
-        return $context[OptionsProviderData::FIELD_NAME];
+        return $context[OptionsProviderData::FIELD_NAME] ?? null;
     }
 
     /**
