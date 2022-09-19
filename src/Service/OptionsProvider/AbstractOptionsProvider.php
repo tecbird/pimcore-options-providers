@@ -6,6 +6,8 @@ use Passioneight\Bundle\PimcoreOptionsProvidersBundle\Constant\OptionsProviderDa
 use Pimcore\Cache\Runtime;
 use Pimcore\Model\DataObject\ClassDefinition\Data;
 use Pimcore\Model\DataObject\ClassDefinition\DynamicOptionsProvider\SelectOptionsProviderInterface;
+use function file_put_contents;
+use function json_last_error_msg;
 
 abstract class AbstractOptionsProvider implements SelectOptionsProviderInterface
 {
@@ -62,7 +64,9 @@ abstract class AbstractOptionsProvider implements SelectOptionsProviderInterface
             Runtime::set($cacheKey, $this->configuration);
 
             if(json_last_error() !== JSON_ERROR_NONE) {
-                throw new \InvalidArgumentException("The options provider data is not valid. Reason: " . json_last_error_msg());
+                $data = $fieldDefinition ? $fieldDefinition->getOptionsProviderData() : $context;
+                file_put_contents('/php/public/var/tmp/option_provider.txt', json_last_error_msg(), \FILE_APPEND);
+                file_put_contents('/php/public/var/tmp/option_provider.txt', $data, \FILE_APPEND);
             }
         }
 
