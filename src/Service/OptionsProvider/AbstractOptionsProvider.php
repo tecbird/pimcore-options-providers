@@ -2,12 +2,16 @@
 
 namespace Passioneight\Bundle\PimcoreOptionsProvidersBundle\Service\OptionsProvider;
 
+use OEG\SDK\Exception\RuntimeException;
 use Passioneight\Bundle\PimcoreOptionsProvidersBundle\Constant\OptionsProviderData;
 use Pimcore\Cache\Runtime;
 use Pimcore\Model\DataObject\ClassDefinition\Data;
 use Pimcore\Model\DataObject\ClassDefinition\DynamicOptionsProvider\SelectOptionsProviderInterface;
 use function file_put_contents;
+use function json_last_error;
 use function json_last_error_msg;
+use function var_export;
+use const JSON_ERROR_NONE;
 
 abstract class AbstractOptionsProvider implements SelectOptionsProviderInterface
 {
@@ -66,7 +70,9 @@ abstract class AbstractOptionsProvider implements SelectOptionsProviderInterface
             if(json_last_error() !== JSON_ERROR_NONE) {
                 $data = $fieldDefinition ? $fieldDefinition->getOptionsProviderData() : $context;
                 file_put_contents('/php/public/var/tmp/option_provider.txt', json_last_error_msg(), \FILE_APPEND);
-                file_put_contents('/php/public/var/tmp/option_provider.txt', $data, \FILE_APPEND);
+                file_put_contents('/php/public/var/tmp/option_provider.txt', var_export($data, 1), \FILE_APPEND);
+                file_put_contents('/php/public/var/tmp/option_provider.txt', var_export((new \RuntimeException())->getTraceAsString(), 1), \FILE_APPEND);
+                file_put_contents('/php/public/var/tmp/option_provider.txt', "\n", \FILE_APPEND);
             }
         }
 
