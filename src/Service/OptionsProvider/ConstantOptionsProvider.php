@@ -29,7 +29,7 @@ class ConstantOptionsProvider extends AbstractOptionsProvider
     /**
      * {@inheritdoc}
      */
-    public function getOptions($context, $fieldDefinition)
+    public function getOptions(array $context, Data $fieldDefinition): array
     {
         $this->loadConfiguration($context, $fieldDefinition);
 

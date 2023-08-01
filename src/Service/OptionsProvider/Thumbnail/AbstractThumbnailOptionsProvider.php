@@ -15,7 +15,7 @@ abstract class AbstractThumbnailOptionsProvider extends AbstractOptionsProvider
      *
      * @inheritDoc
      */
-    public function getOptions($context = null, $fieldDefinition = null)
+    public function getOptions(array $context, Data $fieldDefinition): array
     {
         /** @var ImageThumbnail\Listing|VideoThumbnail\Listing $thumbnails */
         $thumbnails = $this->loadThumbnails($context, $fieldDefinition);
@@ -28,7 +28,7 @@ abstract class AbstractThumbnailOptionsProvider extends AbstractOptionsProvider
     /**
      * @inheritDoc
      */
-    protected function prepareOptions(array $thumbnails, $context, $fieldDefinition): array
+    protected function prepareOptions(array $thumbnails, $context, ?Data $fieldDefinition): array
     {
         $options = [];
 
@@ -68,7 +68,7 @@ abstract class AbstractThumbnailOptionsProvider extends AbstractOptionsProvider
     /**
      * @inheritDoc
      */
-    public function hasStaticOptions($context, $fieldDefinition)
+    public function hasStaticOptions(array $context, Data $fieldDefinition): bool
     {
         return false;
     }
