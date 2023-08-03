@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Passioneight\Bundle\PimcoreOptionsProvidersBundle\Service\OptionsProvider;
 
+use function md5;
+use function serialize;
 use const JSON_ERROR_NONE;
 use Exception;
 use Passioneight\Bundle\PimcoreOptionsProvidersBundle\Constant\OptionsProviderData;
@@ -65,7 +67,7 @@ abstract class AbstractOptionsProvider implements SelectOptionsProviderInterface
      */
     protected function loadConfiguration(?array $context, ?Data $fieldDefinition): array
     {
-        $cacheKey = self::CACHE_KEY_PREFIX . md5($fieldDefinition ? $fieldDefinition->getOptionsProviderData() : serialize($context));
+        $cacheKey = self::CACHE_KEY_PREFIX . md5($fieldDefinition ? $fieldDefinition->getOptionsProviderData() ?? $fieldDefinition::class . serialize($context) : serialize($context));
 
         try {
             $this->configuration = Runtime::get($cacheKey);
