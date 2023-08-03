@@ -28,7 +28,7 @@ class StoreProvider
      * @param Data|null $optionsProviderFieldDefinition
      * @return array
      */
-    public function getStoreForOptionsProvider(AbstractOptionsProvider $optionsProvider, $optionsProviderContext = null, $optionsProviderFieldDefinition = null): array
+    public function getStoreForOptionsProvider(AbstractOptionsProvider $optionsProvider, array $optionsProviderContext = null, Data $optionsProviderFieldDefinition = null): array
     {
         $options = $optionsProvider->getOptions($optionsProviderContext, $optionsProviderFieldDefinition);
         return $this->getStore($options);

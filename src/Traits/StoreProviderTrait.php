@@ -13,7 +13,7 @@ trait StoreProviderTrait
      * @param StoreProvider $storeProvider
      * @internal
      */
-    public function setStoreProvider(StoreProvider $storeProvider)
+    public function setStoreProvider(StoreProvider $storeProvider): void
     {
         $this->storeProvider = $storeProvider;
     }

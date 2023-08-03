@@ -55,7 +55,7 @@ abstract class AbstractIconStoreProvider extends StoreProvider
      * @param Environment $environment
      * @internal
      */
-    public function setEnvironment(Environment $environment)
+    public function setEnvironment(Environment $environment): void
     {
         $this->environment = $environment;
     }

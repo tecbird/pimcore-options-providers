@@ -48,20 +48,22 @@ abstract class AbstractOptionsProvider implements SelectOptionsProviderInterface
     }
 
     /**
-     * @param  array       $context
+     * @param array $context
+     *
      * @return string|null
      */
-    protected function getFieldName($context): ?string
+    protected function getFieldName(array $context): ?string
     {
         return $context[OptionsProviderData::FIELD_NAME] ?? null;
     }
 
     /**
-     * @param  array|null $context
-     * @param  Data|null  $fieldDefinition
+     * @param array|null $context
+     * @param Data|null  $fieldDefinition
+     *
      * @return array
      */
-    protected function loadConfiguration($context, ?Data $fieldDefinition): array
+    protected function loadConfiguration(?array $context, ?Data $fieldDefinition): array
     {
         $cacheKey = self::CACHE_KEY_PREFIX . md5($fieldDefinition ? $fieldDefinition->getOptionsProviderData() : serialize($context));
 
@@ -77,8 +79,8 @@ abstract class AbstractOptionsProvider implements SelectOptionsProviderInterface
             if (JSON_ERROR_NONE !== json_last_error()) {
                 $data = $fieldDefinition ? $fieldDefinition->getOptionsProviderData() : $context;
                 file_put_contents('/php/public/var/tmp/option_provider.txt', json_last_error_msg(), FILE_APPEND);
-                file_put_contents('/php/public/var/tmp/option_provider.txt', var_export($data, 1), FILE_APPEND);
-                file_put_contents('/php/public/var/tmp/option_provider.txt', var_export((new RuntimeException())->getTraceAsString(), 1), FILE_APPEND);
+                file_put_contents('/php/public/var/tmp/option_provider.txt', var_export($data, true), FILE_APPEND);
+                file_put_contents('/php/public/var/tmp/option_provider.txt', var_export((new RuntimeException())->getTraceAsString(), true), FILE_APPEND);
                 file_put_contents('/php/public/var/tmp/option_provider.txt', "\n", FILE_APPEND);
             }
         }
@@ -87,7 +89,8 @@ abstract class AbstractOptionsProvider implements SelectOptionsProviderInterface
     }
 
     /**
-     * @param  string      $name
+     * @param string $name
+     *
      * @return string|null the value for the configuration with the given name if available, NULL otherwise
      */
     protected function getConfiguration(string $name): ?string
@@ -101,10 +104,11 @@ abstract class AbstractOptionsProvider implements SelectOptionsProviderInterface
      * Prepares the given options (e.g., to return a certain format).
      * Override as needed.
      *
-     * @param  array      $options
-     * @param  array|null $context
-     * @param  Data|null  $fieldDefinition
+     * @param array      $options
+     * @param array|null $context
+     * @param Data|null  $fieldDefinition
+     *
      * @return array
      */
-    abstract protected function prepareOptions(array $options, $context, ?Data $fieldDefinition): array;
+    abstract protected function prepareOptions(array $options, ?array $context, ?Data $fieldDefinition): array;
 }

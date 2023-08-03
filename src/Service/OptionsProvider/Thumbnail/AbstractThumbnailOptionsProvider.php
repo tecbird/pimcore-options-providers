@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Passioneight\Bundle\PimcoreOptionsProvidersBundle\Service\OptionsProvider\Thumbnail;
 
@@ -13,7 +14,7 @@ abstract class AbstractThumbnailOptionsProvider extends AbstractOptionsProvider
     /**
      * Neither $context nor $fieldDefinition are used here. Thus, no need to pass any values.
      *
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getOptions(array $context, Data $fieldDefinition): array
     {
@@ -22,13 +23,14 @@ abstract class AbstractThumbnailOptionsProvider extends AbstractOptionsProvider
         $thumbnails = $thumbnails->getThumbnails();
 
         $options = $this->prepareOptions($thumbnails, $context, $fieldDefinition);
+
         return array_values($options);
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    protected function prepareOptions(array $thumbnails, $context, ?Data $fieldDefinition): array
+    protected function prepareOptions(array $thumbnails, ?array $context, ?Data $fieldDefinition): array
     {
         $options = [];
 
@@ -36,8 +38,8 @@ abstract class AbstractThumbnailOptionsProvider extends AbstractOptionsProvider
             $thumbnailName = $thumbnail->getName();
 
             $options[] = [
-                "key" => $thumbnailName,
-                "value" => $thumbnailName,
+                'key'   => $thumbnailName,
+                'value' => $thumbnailName,
             ];
         }
 
@@ -46,7 +48,8 @@ abstract class AbstractThumbnailOptionsProvider extends AbstractOptionsProvider
 
     /**
      * @param array|null $context
-     * @param Data|null $fieldDefinition
+     * @param Data|null  $fieldDefinition
+     *
      * @return array|ImageThumbnail\Listing|VideoThumbnail\Listing array is returned in case of invalid type
      */
     private function loadThumbnails(?array $context, ?Data $fieldDefinition): array|ImageThumbnail\Listing|VideoThumbnail\Listing
@@ -56,7 +59,7 @@ abstract class AbstractThumbnailOptionsProvider extends AbstractOptionsProvider
         return match ($this->getThumbnailType()) {
             ThumbnailType::IMAGE => new ImageThumbnail\Listing(),
             ThumbnailType::VIDEO => new VideoThumbnail\Listing(),
-            default => []
+            default              => []
         };
     }
 
@@ -66,7 +69,7 @@ abstract class AbstractThumbnailOptionsProvider extends AbstractOptionsProvider
     abstract protected function getThumbnailType(): string;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function hasStaticOptions(array $context, Data $fieldDefinition): bool
     {

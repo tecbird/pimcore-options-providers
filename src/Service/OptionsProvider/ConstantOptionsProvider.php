@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Passioneight\Bundle\PimcoreOptionsProvidersBundle\Service\OptionsProvider;
 
@@ -15,12 +16,13 @@ class ConstantOptionsProvider extends AbstractOptionsProvider
      * Convenience method; in case the options are needed programmatically.
      *
      * @param string $constantsClass fully qualified namespace
+     *
      * @return array
      */
     public function getOptionsForConstant(string $constantsClass): array
     {
         $context = [
-            OptionsProviderData::CONSTANTS_CLASS => $constantsClass
+            OptionsProviderData::CONSTANTS_CLASS => $constantsClass,
         ];
 
         return $this->getOptions($context, null);
@@ -29,7 +31,7 @@ class ConstantOptionsProvider extends AbstractOptionsProvider
     /**
      * {@inheritdoc}
      */
-    public function getOptions(array $context, Data $fieldDefinition): array
+    public function getOptions(array $context, ?Data $fieldDefinition): array
     {
         $this->loadConfiguration($context, $fieldDefinition);
 
@@ -42,20 +44,20 @@ class ConstantOptionsProvider extends AbstractOptionsProvider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * Note that we don't need to actually translate the option's label, because Pimcore translates all labels
      * automatically anyway.
      */
-    protected function prepareOptions(array $options, $context, ?Data $fieldDefinition): array
+    protected function prepareOptions(array $options, ?array $context, ?Data $fieldDefinition): array
     {
-        $class = $this->loadConstantsClass($context, $fieldDefinition);
+        $class          = $this->loadConstantsClass($context, $fieldDefinition);
         $isTranslatable = is_a($class, TranslatableConstant::class, true);
 
         foreach ($options as $key => $option) {
             $options[$key] = [
-                "key" => $isTranslatable ? $class::toTranslationKey($option) : $option,
-                "value" => $option,
+                'key'   => $isTranslatable ? $class::toTranslationKey($option) : $option,
+                'value' => $option,
             ];
         }
 
@@ -64,10 +66,11 @@ class ConstantOptionsProvider extends AbstractOptionsProvider
 
     /**
      * @param array|null $context
-     * @param Data|null $fieldDefinition
-     * @return string|Constant|TranslatableConstant the actual return value is a string; any other type hint is for IDE auto-completion.
+     * @param Data|null  $fieldDefinition
+     *
+     * @return string|Constant|TranslatableConstant the actual return value is a string; any other type hint is for IDE auto-completion
      */
-    protected function loadConstantsClass($context, ?Data $fieldDefinition): string
+    protected function loadConstantsClass(?array $context, ?Data $fieldDefinition): string
     {
         $this->loadConfiguration($context, $fieldDefinition);
 
@@ -79,16 +82,18 @@ class ConstantOptionsProvider extends AbstractOptionsProvider
 
     /**
      * @param array|null $context
-     * @return string the constants class (without namespace) based on the field name.
+     *
+     * @return string the constants class (without namespace) based on the field name
      */
-    protected function getConstantsClassFromFieldName($context): string
+    protected function getConstantsClassFromFieldName(?array $context): string
     {
         return ucfirst($this->getFieldName($context));
     }
 
     /**
      * @param string $class
-     * @return string the fully qualified class name.
+     *
+     * @return string the fully qualified class name
      */
     protected function getFQCN(string $class): string
     {
@@ -100,7 +105,7 @@ class ConstantOptionsProvider extends AbstractOptionsProvider
             $class = NamespaceUtility::getClassNameFromNamespace($class);
         }
 
-        return join(Php::NAMESPACE_DELIMITER, [$namespace, $class]);
+        return implode(Php::NAMESPACE_DELIMITER, [$namespace, $class]);
     }
 
     /**
@@ -108,6 +113,6 @@ class ConstantOptionsProvider extends AbstractOptionsProvider
      */
     public static function getDefaultConstantsNamespace(): string
     {
-        return NamespaceUtility::join("App", "Constant");
+        return NamespaceUtility::join('App', 'Constant');
     }
 }

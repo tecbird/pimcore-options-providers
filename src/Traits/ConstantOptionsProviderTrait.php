@@ -13,7 +13,7 @@ trait ConstantOptionsProviderTrait
      * @param ConstantOptionsProvider $constantOptionsProvider
      * @internal
      */
-    public function setConstantOptionsProvider(ConstantOptionsProvider $constantOptionsProvider)
+    public function setConstantOptionsProvider(ConstantOptionsProvider $constantOptionsProvider): void
     {
         $this->constantOptionsProvider = $constantOptionsProvider;
     }
